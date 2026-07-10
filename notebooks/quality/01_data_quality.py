@@ -32,3 +32,24 @@ bronze.describe().show()
 bronze.selectExpr(
     "count(*) as total_rows"
 ).show()
+
+# ------------------------------------------------------------
+# Check missing values
+# ------------------------------------------------------------
+bronze.select([
+    F.count(F.when(F.col(c).isNull(), c)).alias(c)
+    for c in bronze.columns
+]).show()
+
+# ------------------------------------------------------------
+# Check duplicate Order ID
+# ------------------------------------------------------------
+bronze.groupBy("order_id") \
+      .count() \
+      .filter("count > 1") \
+      .show()
+      
+# ------------------------------------------------------------
+# Verify row count before and after transformation
+# ------------------------------------------------------------
+print(f"Total Rows: {bronze.count()}")
