@@ -9,14 +9,23 @@
 
 ## Project Architecture
 
-CSV
-↓
-Bronze
-↓
-Silver
-↓
-Gold
+```mermaid
+flowchart LR
+    A[Raw CSV]
+    B[Bronze Delta]
+    C[Quality Check]
+    D[Silver]
+    E[Gold]
+    F[Dashboard]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+```
 
 ## Current Progress
 
 - Bronze Layer
+
