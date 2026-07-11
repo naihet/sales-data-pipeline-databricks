@@ -28,4 +28,4 @@ flowchart LR
 ## Current Progress
 
 - Bronze Layer
-
+- Silver Layer
