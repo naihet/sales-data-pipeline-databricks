@@ -7,6 +7,7 @@
 # ============================================================
 
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import col
 
 # Get or create Spark session
 spark = SparkSession.builder.getOrCreate()
@@ -20,6 +21,9 @@ df = (
     spark.read
         .option("header", True)
         .option("inferSchema", True)
+        .option("quote", '"')
+        .option("escape", '"')
+        .option("multiLine", True)
         .csv("/Volumes/workspace/salesdb/raw_data/Sample - Superstore.csv")
 )
 
@@ -30,8 +34,11 @@ df = (
 #   Ship Date -> ship_date
 # ------------------------------------------------------------
 df = df.toDF(*[
-    col.lower().replace(" ", "_")
-    for col in df.columns
+    c.strip()
+     .lower()
+     .replace(" ", "_")
+     .replace("-", "_")
+    for c in df.columns
 ])
 
 # Preview dataset
