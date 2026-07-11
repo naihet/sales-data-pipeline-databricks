@@ -58,11 +58,15 @@ print(f"Rows after removing duplicates  : {after_count}")
 # Check for invalid numeric values
 # ------------------------------------------------------------
 
-print("Negative sales records:")
-silver.filter(col("sales") < 0).show()
+negative_sales = silver.filter(col("sales") < 0).count()
+invalid_quantity = silver.filter(col("quantity") <= 0).count()
 
-print("Invalid quantity records:")
-silver.filter(col("quantity") <= 0).show()
+print(f"Negative sales records : {negative_sales}")
+print(f"Invalid quantity records : {invalid_quantity}")
+
+#silver.filter(col("sales") < 0).show()   #
+
+#silver.filter(col("quantity") <= 0).show()   #
 
 # ------------------------------------------------------------
 # Dataset Summary
